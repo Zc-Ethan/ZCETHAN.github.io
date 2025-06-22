@@ -1,10 +1,78 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>Zc-Ethan's blog</title>
-    </head>
-    <body style='background-image: url("https://img.xjh.me/desktop/bg/nature/65093391_p0.jpg");background-repeat: no-repeat;background-size: cover;background-position: center;background-attachment: fixed;'>
-        <h1>没写</h1>
-    </body>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>我的个人网站</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+  <style>
+    body {
+      font-family: "Helvetica Neue", "Segoe UI", sans-serif;
+      max-width: 900px;
+      margin: auto;
+      padding: 2rem;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    nav a {
+      margin: 0 0.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      color: #0059b3;
+    }
+    header {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .section {
+      margin-top: 3rem;
+    }
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div><strong>我的站点</strong></div>
+    <div>
+      <a href="/">首页</a>
+      <a href="/blog">博客</a>
+      <a href="/resources">资源</a>
+      <a href="/about">关于</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>欢迎来到我的个人网站</h1>
+    <p>记录学习，分享资源，积累经验</p>
+  </header>
+
+  <section class="section">
+    <h2>📚 最新博客</h2>
+    <ul>
+      <li><a href="/blog/2025-06-22-my-first-post.html">我的第一篇博客文章</a> - 2025/06/22</li>
+      <li><a href="/blog/2025-06-15-algorithm-note.html">算法学习笔记</a> - 2025/06/15</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2>🧰 我的资源</h2>
+    <ul>
+      <li><a href="/resources/leetcode-cheatsheet.pdf">LeetCode 速查表</a></li>
+      <li><a href="/resources/notes/">学习笔记合集</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 我的名字. 版权所有。</p>
+  </footer>
+</body>
 </html>
