@@ -6,37 +6,197 @@
   <title>我的个人网站</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
   <style>
-    body {
-      font-family: "Helvetica Neue", "Segoe UI", sans-serif;
-      max-width: 900px;
-      margin: auto;
-      padding: 2rem;
-    }
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    nav a {
-      margin: 0 0.5rem;
-      text-decoration: none;
-      font-weight: bold;
-      color: #0059b3;
-    }
-    header {
-      margin-top: 2rem;
-      text-align: center;
-    }
-    .section {
-      margin-top: 3rem;
-    }
-    footer {
-      margin-top: 4rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-    }
+   /* 基础样式 */
+body {
+  font-family: "Helvetica Neue", "Segoe UI", sans-serif;
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+  background-color: #f5f5f5; /* 默认浅色背景 */
+  color: #333; /* 默认浅色字体 */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f0f4f8;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+nav a {
+  margin: 0 0.8rem;
+  text-decoration: none;
+  font-weight: 600;
+  color: #0066cc;
+  transition: color 0.2s ease-in-out;
+}
+
+nav a:hover {
+  color: #003366;
+}
+
+nav button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #0066cc;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+header {
+  margin-top: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.card {
+  display: flex;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-8px); /* 卡片浮动效果 */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.card img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 1rem;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.card h3 {
+  margin-top: 0;
+  font-size: 1.25rem;
+}
+
+.card .date {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.card p {
+  margin-top: 0.5rem;
+  color: #555;
+}
+
+footer {
+  margin-top: 4rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
+}
+/* 主题切换按钮样式 */
+#theme-toggle {
+  position: fixed;
+  bottom: 30px;
+  right: 150px;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+}
+
+/* 深色模式 */
+body.dark-mode {
+  background-color: #2f2f2f;
+  color: #f5f5f5;
+}
+
+body.dark-mode nav {
+  background-color: #3c3c3c;
+}
+
+body.dark-mode .card {
+  background-color: #333;
+  color: #f5f5f5;
+}
+
+body.dark-mode footer {
+  color: #ccc;
+}
+
+body.dark-mode #theme-toggle {
+  background-color: #444;
+}/* 深色模式下切换视图按钮反色 */
+
+body.dark-mode #toggle-view {
+  background-color: #444; /* 背景颜色变为深灰色 */
+  color: #f5f5f5; /* 文字颜色改为白色 */
+}
+
+body.dark-mode #toggle-view:hover {
+  background-color: #555; /* 鼠标悬浮时背景变为稍微更深的灰色 */
+}
+
+
+/* 深色模式下的文本颜色反转 */
+body.dark-mode nav a {
+  color: #4d94ff;
+}
+
+body.dark-mode nav a:hover {
+  color: #99ccff;
+}
+
+body.dark-mode nav button {
+  background-color: #3399ff;
+}
+
+body.dark-mode .card h3 {
+  color: #f5f5f5;
+}
+
+body.dark-mode .card .date {
+  color: #bbb;
+}
+
+body.dark-mode .card p {
+  color: #ddd;
+}
+
+body.dark-mode footer {
+  color: #bbb;
+}
+
+/* 隐藏的内容 */
+.hidden {
+  display: none;
+}
+/* 深色模式下的特定文字反色 */
+body.dark-mode header h1 {
+  color: #f5f5f5; /* 将“欢迎来到我的个人网站”文字改为浅色 */
+}
+
+body.dark-mode nav strong {
+  color: #f5f5f5; /* 将“个人站点”文字改为浅色 */
+}
+
   </style>
 </head>
 <body>
@@ -44,9 +204,8 @@
     <div><strong>我的站点</strong></div>
     <div>
       <a href="/">首页</a>
-      <a href="/blog">博客</a>
-      <a href="/resources">资源</a>
       <a href="/about">关于</a>
+      <button id="toggle-view" onclick="toggleView()">切换为资源</button>
     </div>
   </nav>
 
@@ -55,24 +214,89 @@
     <p>记录学习，分享资源，积累经验</p>
   </header>
 
-  <section class="section">
-    <h2>📚 最新博客</h2>
-    <ul>
-      <li><a href="/blog/2025-06-22-my-first-post.html">我的第一篇博客文章</a> - 2025/06/22</li>
-      <li><a href="/blog/2025-06-15-algorithm-note.html">算法学习笔记</a> - 2025/06/15</li>
-    </ul>
+  <!-- 主体内容：博客部分 -->
+  <section class="card-section" id="blog-section">
+    <div class="card" onclick="window.location.href='/blog/2025-06-22-my-first-post.html'">
+      <img src="https://via.placeholder.com/120" alt="我的第一篇博客">
+      <div class="card-content">
+        <h3>我的第一篇博客文章</h3>
+        <p class="date">2025/06/22</p>
+        <p>这是我写的第一篇博客，记录了一些学习心得和经验。</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="window.location.href='/blog/2025-06-15-algorithm-note.html'">
+      <img src="https://via.placeholder.com/120" alt="算法学习笔记">
+      <div class="card-content">
+        <h3>算法学习笔记</h3>
+        <p class="date">2025/06/15</p>
+        <p>这是关于算法学习的一些笔记，涵盖了常用的算法与数据结构。</p>
+      </div>
+    </div>
   </section>
 
-  <section class="section">
-    <h2>🧰 我的资源</h2>
-    <ul>
-      <li><a href="/resources/leetcode-cheatsheet.pdf">LeetCode 速查表</a></li>
-      <li><a href="/resources/notes/">学习笔记合集</a></li>
-    </ul>
+  <!-- 资源部分 -->
+  <section class="card-section hidden" id="resources-section">
+    <div class="card" onclick="window.location.href='/blog/2025-06-22-my-first-post.html'">
+      <img src="https://via.placeholder.com/120" alt="我的第一篇博客">
+      <div class="card-content">
+        <h3>普化实验</h3>
+        <p class="date">2025/06/22</p>
+        <p>这是我写的第一篇博客，记录了一些学习心得和经验。</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="window.location.href='/blog/2025-06-15-algorithm-note.html'">
+      <img src="https://via.placeholder.com/120" alt="算法学习笔记">
+      <div class="card-content">
+        <h3>普物实验</h3>
+        <p class="date">2025/06/15</p>
+        <p>这是关于算法学习的一些笔记，涵盖了常用的算法与数据结构。</p>
+      </div>
+    </div>
   </section>
 
   <footer>
     <p>&copy; 2025 我的名字. 版权所有。</p>
   </footer>
+
+  <button id="theme-toggle" onclick="toggleTheme()">切换为深色模式</button>
+
+  <script>
+    let isDarkMode = false;
+
+    function toggleTheme() {
+      const body = document.body;
+      const themeButton = document.getElementById('theme-toggle');
+
+      if (isDarkMode) {
+        body.classList.remove('dark-mode');
+        themeButton.textContent = '切换为深色模式';
+      } else {
+        body.classList.add('dark-mode');
+        themeButton.textContent = '切换为浅色模式';
+      }
+      isDarkMode = !isDarkMode;
+    }
+
+    let isBlogView = true; // 默认显示博客视图
+
+    function toggleView() {
+      const blogSection = document.getElementById('blog-section');
+      const resourcesSection = document.getElementById('resources-section');
+      const toggleButton = document.getElementById('toggle-view');
+      
+      if (isBlogView) {
+        blogSection.classList.add('hidden');
+        resourcesSection.classList.remove('hidden');
+        toggleButton.textContent = '切换为博客';
+      } else {
+        blogSection.classList.remove('hidden');
+        resourcesSection.classList.add('hidden');
+        toggleButton.textContent = '切换为资源';
+      }
+      isBlogView = !isBlogView; // 切换视图状态
+    }
+  </script>
 </body>
 </html>
