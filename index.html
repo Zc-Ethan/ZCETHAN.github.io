@@ -6,16 +6,195 @@
   <title>我的个人网站</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
   <style>
-   /* 基础样式 */
-body {
-  font-family: "Helvetica Neue", "Segoe UI", sans-serif;
-  max-width: 1200px;
-  margin: auto;
-  padding: 1rem;
-  background-color: #f5f5f5; /* 默认浅色背景 */
-  color: #333; /* 默认浅色字体 */
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+  /* 基础样式 */
+    body {
+      font-family: "Helvetica Neue", "Segoe UI", sans-serif;
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem;
+      background-color: #f5f5f5;
+      color: #333;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* 新增：卡片容器样式，与文章正文宽度一致 */
+    .card-section {
+      margin-right: 50px;
+      margin-left: 50px;
+    }
+
+    .card {
+      display: flex;
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+      width: 100%; /* 卡片宽度填充容器 */
+      box-sizing: border-box; /* 确保内边距不影响总宽度 */
+    }
+/* 新增：左侧个人信息栏样式 */
+    .left-sidebar {
+      position: fixed;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 180px;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #0066cc;
+      margin-bottom: 1rem;
+    }
+
+    .user-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .user-title {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .user-info {
+      width: 100%;
+      font-size: 0.85rem;
+      color: #555;
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    .user-info p {
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .user-info i {
+      width: 20px;
+      text-align: center;
+      margin-right: 8px;
+      color: #0066cc;
+    }
+
+    .signature {
+      font-style: italic;
+      margin: 1rem 0;
+      padding: 0.5rem;
+      border-top: 1px dashed #eee;
+      border-bottom: 1px dashed #eee;
+      color: #666;
+    }
+
+    /* 右侧目录栏样式 */
+    .sidebar {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 200px;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 999;
+    }
+    
+    .sidebar h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #0066cc;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    
+    .sidebar ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.5rem 0;
+    }
+    
+    .sidebar li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .sidebar a {
+      text-decoration: none;
+      color: #555;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+    
+    .sidebar a:hover {
+      color: #0066cc;
+    }
+
+    /* 深色模式下的侧边栏样式 */
+    body.dark-mode .left-sidebar,
+    body.dark-mode .sidebar {
+      background-color: #333;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    body.dark-mode .left-sidebar .user-name {
+      color: #f5f5f5;
+    }
+    
+    body.dark-mode .left-sidebar .user-title,
+    body.dark-mode .left-sidebar .user-info,
+    body.dark-mode .left-sidebar .signature {
+      color: #bbb;
+    }
+    
+    body.dark-mode .left-sidebar .avatar {
+      border-color: #4d94ff;
+    }
+    
+    body.dark-mode .left-sidebar .user-info i {
+      color: #4d94ff;
+    }
+    
+    body.dark-mode .left-sidebar .signature {
+      border-color: #444;
+    }
+    
+    body.dark-mode .sidebar h3 {
+      color: #4d94ff;
+      border-bottom-color: #444;
+    }
+    
+    body.dark-mode .sidebar a {
+      color: #ddd;
+    }
+    
+    body.dark-mode .sidebar a:hover {
+      color: #4d94ff;
+    }
+
+    /* 内容区域 - 保持您设置的边距不变 */
+    .content {
+      margin-right: 50px;
+      margin-left: 50px;
+    }
 
 nav {
   display: flex;
@@ -198,16 +377,36 @@ body.dark-mode nav strong {
 }
 
   </style>
+  <!-- 引入Font Awesome图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <nav>
     <div><strong>我的站点</strong></div>
     <div>
-      <a href="/">首页</a>
-      <a href="/about">关于</a>
+      <a href="./index.html">首页</a>
+      <a href="./about.html">关于</a>
       <button id="toggle-view" onclick="toggleView()">切换为资源</button>
     </div>
   </nav>
+  <!-- 新增：左侧个人信息栏 -->
+  <div class="left-sidebar">
+    <img src="./pic/头像.jpg" alt="头像" class="avatar">
+    <div class="user-name">ZCETHAN</div>
+    <div class="user-title">学生</div>
+    
+    <div class="signature">
+      探索世界的奥秘，记录学习的点滴
+    </div>
+    
+    <div class="user-info">
+      <p><i class="fas fa-envelope"></i> zcethan@example.com</p>
+      <p><i class="fas fa-phone"></i> 138-XXXX-XXXX</p>
+      <p><i class="fab fa-qq"></i> 123456789</p>
+      <p><i class="fas fa-map-marker-alt"></i> 浙江杭州</p>
+      <p><i class="fas fa-graduation-cap"></i> 浙江大学</p>
+    </div>
+  </div>
 
   <header>
     <h1>欢迎来到我的个人网站</h1>
@@ -246,18 +445,18 @@ body.dark-mode nav strong {
       </div>
     </div>
 
-    <div class="card" onclick="window.location.href='/blog/2025-06-15-algorithm-note.html'">
-      <img src="https://via.placeholder.com/120" alt="算法学习笔记">
+    <div class="card" onclick="window.location.href='./blog/GeneralPhysicsExperiment.html'">
+      <img src="https://via.placeholder.com/120" alt="普物Ⅰ实验">
       <div class="card-content">
-        <h3>普物实验</h3>
-        <p class="date">2025/06/15</p>
-        <p>这是关于算法学习的一些笔记，涵盖了常用的算法与数据结构。</p>
+        <h3>普物Ⅰ实验</h3>
+        <p class="date">2025/06/22</p>
+        <p>记录了笔者所选的物理实验及其上课体验，并提供了笔者的实验报告。</p>
       </div>
     </div>
   </section>
 
   <footer>
-    <p>&copy; 2025 我的名字. 版权所有。</p>
+    <p>&copy; 2025 ZCETHAN. 版权所有。</p>
   </footer>
 
   <button id="theme-toggle" onclick="toggleTheme()">切换为深色模式</button>

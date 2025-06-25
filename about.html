@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>某篇笔记 - 我的个人网站</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+  <style>
+    /* 基础样式 */
+    body {
+      font-family: "Helvetica Neue", "Segoe UI", sans-serif;
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem;
+      background-color: #f5f5f5;
+      color: #333;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f0f4f8;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    nav a, nav button {
+      text-decoration: none;
+      font-weight: 600;
+      color: #0066cc;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s ease-in-out;
+    }
+
+    nav a:hover, nav button:hover {
+      color: #003366;
+    }
+
+    header {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+    }
+
+    .content {
+      margin-top: 2rem;
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .content h2 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    .content .meta {
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .content .body {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* 主题切换按钮样式 */
+    #theme-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 150px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+    }
+
+    /* 深色模式 */
+    body.dark-mode {
+    background-color: #2f2f2f;
+    color: #f5f5f5;
+    }
+
+    body.dark-mode nav {
+    background-color: #3c3c3c;
+    }
+
+    body.dark-mode nav a,
+    body.dark-mode nav button {
+    color: #4d94ff; /* 链接和按钮文字变为亮蓝色 */
+    }
+
+    body.dark-mode nav a:hover,
+    body.dark-mode nav button:hover {
+    color: #99ccff; /* 悬停时颜色变浅 */
+    }
+
+    body.dark-mode .content {
+    background-color: #333;
+    color: #f5f5f5;
+    }
+
+    body.dark-mode .content h2 {
+    color: #f5f5f5;
+    }
+
+    body.dark-mode .content .meta {
+    color: #bbb;
+    }
+
+    body.dark-mode .content .body {
+    color: #ddd;
+    }
+
+    body.dark-mode footer {
+    color: #bbb;
+    }
+
+    body.dark-mode #theme-toggle {
+    background-color: #444;
+    color: #f5f5f5;
+    }
+
+    body.dark-mode #theme-toggle:hover {
+    background-color: #555;
+    }
+
+    body.dark-mode img {
+    border-radius: 8px;
+    filter: brightness(0.9);
+    }
+
+    /* 深色模式下反色处理的其他部分 */
+    body.dark-mode header h1 {
+    color: #f5f5f5; /* 标题文字为浅色 */
+    }
+
+    body.dark-mode header p {
+    color: #bbb; /* 副标题文字为浅灰色 */
+    }
+
+    body.dark-mode .content .body p {
+    color: #ddd; /* 内容文字为浅灰色 */
+    }
+
+    body.dark-mode .content .meta {
+    color: #bbb; /* 元数据（日期、作者等）文字颜色 */
+    }
+
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <nav>
+    <div>
+      <a href="./index.html">首页</a>
+      <a href="./about.html">关于</a>
+    </div>
+    <div>
+      <button onclick="window.history.back()">返回</button>
+    </div>
+  </nav>
+
+  <!-- 页面主内容 -->
+  <header>
+    <h1>About Me</h1>
+    <p>一个菜鸡的自我介绍</p>
+  </header>
+
+  <div class="content">
+    <h2>关于我自己</h2>
+    <p class="meta">作者：ZCETHAN | 日期：2025/06/22</p>
+    <div class="body">
+      <p>这是笔记的详细内容，包含我在学习某个领域的经验、技巧和一些实际应用。</p>
+      <p>可以在这里加入更详细的描述，或者相关的代码示例、资源链接等。</p>
+      <img src="https://via.placeholder.com/800x400" alt="示例图片" style="width: 100%; border-radius: 8px; margin-top: 1rem;" />
+    </div>
+  </div>
+
+  <!-- 底部版权 -->
+  <footer>
+    <p>&copy; 2025 ZCETHAN. 版权所有。</p>
+  </footer>
+
+  <!-- 深色模式切换按钮 -->
+  <button id="theme-toggle" onclick="toggleTheme()">切换为深色模式</button>
+
+  <script>
+    let isDarkMode = false;
+
+    function toggleTheme() {
+      const body = document.body;
+      const themeButton = document.getElementById('theme-toggle');
+
+      if (isDarkMode) {
+        body.classList.remove('dark-mode');
+        themeButton.textContent = '切换为深色模式';
+      } else {
+        body.classList.add('dark-mode');
+        themeButton.textContent = '切换为浅色模式';
+      }
+      isDarkMode = !isDarkMode;
+    }
+  </script>
+</body>
+</html>

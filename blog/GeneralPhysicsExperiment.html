@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>某篇笔记 - 我的个人网站</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+  <style>
+    /* 基础样式 */
+    body {
+      font-family: "Helvetica Neue", "Segoe UI", sans-serif;
+      max-width: 1200px;
+      margin: auto;
+      padding: 1rem;
+      background-color: #f5f5f5;
+      color: #333;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      position: relative; /* 为绝对定位的侧边栏提供参考 */
+    }
+
+    /* 新增：左侧个人信息栏样式 */
+    .left-sidebar {
+      position: fixed;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 180px;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #0066cc;
+      margin-bottom: 1rem;
+    }
+
+    .user-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .user-title {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .user-info {
+      width: 100%;
+      font-size: 0.85rem;
+      color: #555;
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    .user-info p {
+      margin: 0.5rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .user-info i {
+      width: 20px;
+      text-align: center;
+      margin-right: 8px;
+      color: #0066cc;
+    }
+
+    .signature {
+      font-style: italic;
+      margin: 1rem 0;
+      padding: 0.5rem;
+      border-top: 1px dashed #eee;
+      border-bottom: 1px dashed #eee;
+      color: #666;
+    }
+
+    /* 右侧目录栏样式 */
+    .sidebar {
+      position: fixed;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 200px;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 999;
+    }
+    
+    .sidebar h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+      color: #0066cc;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    
+    .sidebar ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.5rem 0;
+    }
+    
+    .sidebar li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .sidebar a {
+      text-decoration: none;
+      color: #555;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+    
+    .sidebar a:hover {
+      color: #0066cc;
+    }
+
+    /* 深色模式下的侧边栏样式 */
+    body.dark-mode .left-sidebar,
+    body.dark-mode .sidebar {
+      background-color: #333;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    body.dark-mode .left-sidebar .user-name {
+      color: #f5f5f5;
+    }
+    
+    body.dark-mode .left-sidebar .user-title,
+    body.dark-mode .left-sidebar .user-info,
+    body.dark-mode .left-sidebar .signature {
+      color: #bbb;
+    }
+    
+    body.dark-mode .left-sidebar .avatar {
+      border-color: #4d94ff;
+    }
+    
+    body.dark-mode .left-sidebar .user-info i {
+      color: #4d94ff;
+    }
+    
+    body.dark-mode .left-sidebar .signature {
+      border-color: #444;
+    }
+    
+    body.dark-mode .sidebar h3 {
+      color: #4d94ff;
+      border-bottom-color: #444;
+    }
+    
+    body.dark-mode .sidebar a {
+      color: #ddd;
+    }
+    
+    body.dark-mode .sidebar a:hover {
+      color: #4d94ff;
+    }
+
+    /* 内容区域 - 保持您设置的边距不变 */
+    .content {
+      margin-right: 50px;
+      margin-left: 50px;
+    }
+
+    /* nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f0f4f8;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    nav a, nav button {
+      text-decoration: none;
+      font-weight: 600;
+      color: #0066cc;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.2s ease-in-out;
+    }
+
+    nav a:hover, nav button:hover {
+      color: #003366;
+    } */
+     nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f0f4f8;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    nav a {
+      margin: 0 0.8rem;
+      text-decoration: none;
+      font-weight: 600;
+      color: #0066cc;
+      transition: color 0.2s ease-in-out;
+    }
+
+    nav a:hover {
+      color: #003366;
+    }
+
+    nav button {
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #0066cc;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    header {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+    }
+
+    .content {
+      margin-top: 2rem;
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .content h2 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      color: #333;
+    }
+
+    .meta {
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    .content .body {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #555;
+    }
+
+    footer {
+      margin-top: 4rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* 主题切换按钮样式 */
+    #theme-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 150px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      transition: background-color 0.3s ease;
+    }
+
+    /* 深色模式 */
+    body.dark-mode {
+      background-color: #2f2f2f;
+      color: #f5f5f5;
+    }
+
+    body.dark-mode nav {
+      background-color: #3c3c3c;
+    }
+
+    body.dark-mode nav a,
+    body.dark-mode nav button {
+      color: #4d94ff;
+    }
+
+    body.dark-mode nav a:hover,
+    body.dark-mode nav button:hover {
+      color: #99ccff;
+    }
+
+    body.dark-mode .content {
+      background-color: #333;
+      color: #f5f5f5;
+    }
+
+    body.dark-mode .content h2 {
+      color: #f5f5f5;
+    }
+
+    body.dark-mode .meta {
+      color: #bbb;
+    }
+
+    body.dark-mode .content .body {
+      color: #ddd;
+    }
+
+    body.dark-mode footer {
+      color: #bbb;
+    }
+
+    body.dark-mode #theme-toggle {
+      background-color: #444;
+      color: #f5f5f5;
+    }
+
+    body.dark-mode #theme-toggle:hover {
+      background-color: #555;
+    }
+
+    body.dark-mode img {
+      border-radius: 8px;
+      filter: brightness(0.9);
+    }
+
+    /* 深色模式下反色处理的其他部分 */
+    body.dark-mode header h1 {
+      color: #f5f5f5;
+    }
+
+    body.dark-mode header p {
+      color: #bbb;
+    }
+
+    body.dark-mode .content .body p {
+      color: #ddd;
+    }
+
+    body.dark-mode .meta {
+      color: #bbb;
+    }
+  </style>
+  <!-- 引入Font Awesome图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <nav>
+    <div>
+      <a href="../index.html">首页</a>
+      <a href="../about.html">关于</a>
+    </div>
+    <div>
+      <button onclick="window.history.back()">返回</button>
+    </div>
+  </nav>
+
+  <!-- 新增：左侧个人信息栏 -->
+  <div class="left-sidebar">
+    <img src="../pic/头像.jpg" alt="头像" class="avatar">
+    <div class="user-name">ZCETHAN</div>
+    <div class="user-title">学生</div>
+    
+    <div class="signature">
+      探索世界的奥秘，记录学习的点滴
+    </div>
+    
+    <div class="user-info">
+      <p><i class="fas fa-envelope"></i> zcethan@example.com</p>
+      <p><i class="fas fa-phone"></i> 138-XXXX-XXXX</p>
+      <p><i class="fab fa-qq"></i> 123456789</p>
+      <p><i class="fas fa-map-marker-alt"></i> 浙江杭州</p>
+      <p><i class="fas fa-graduation-cap"></i> 浙江大学</p>
+    </div>
+  </div>
+
+  <!-- 页面主内容 -->
+  <header>
+    <h1>普通物理Ⅰ实验</h1>
+    <p>记录了笔者所选的物理实验及其上课体验，并提供了笔者的实验报告。</p>
+    <p class="meta">作者：ZCETHAN | 日期：2025/06/22</p>
+  </header>
+
+  <!-- 右侧目录栏 -->
+  <div class="sidebar">
+    <h3>目录</h3>
+    <ul>
+      <li><a href="#section1">普物Ⅰ实验</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <h2 id="section1">普物Ⅰ实验</h2>
+    <div class="body">
+      <p>普物Ⅰ实验课会让你选 14 个实验，每个实验都会有不同的老师来带。每次实验上课前会需要现在雪灾浙大上递交一份预习报告（虽然只有部分老师会检查），
+        这份报告不计入评分，因此第一次写的时候可以抱着交了就行的心态。</p>
+      <p>普物实验报告是电子版的，为了区分老师通常会要求预习报告提交 pdf 格式，而正式的报告提交 word 格式。但是笔者室友亲测，如果你反过来也没有关系，
+        并且由于雪灾浙大的问题，word 格式的文档提交后容易出现乱码，因此笔者<b>强烈建议在正式提交报告时使用 pdf 格式</b>。而对于不参与评分的预习报告，笔者建议直接使用
+        word 格式，这样可以避免雪灾浙大在转换 pdf 时出现的乱码问题。
+      </p>
+      <p><a href="../scr/普物实验Ⅰ/演示实验/3240103480+张驰+演示实验+第一周.docx" download="演示实验.docx" class="download-link">演示实验.docx</a></p>
+    </div>
+  </div>
+
+  <!-- 底部版权 -->
+  <footer>
+    <p>&copy; 2025 ZCETHAN. 版权所有。</p>
+  </footer>
+
+  <!-- 深色模式切换按钮 -->
+  <button id="theme-toggle" onclick="toggleTheme()">切换为深色模式</button>
+
+  <script>
+    let isDarkMode = false;
+
+    function toggleTheme() {
+      const body = document.body;
+      const themeButton = document.getElementById('theme-toggle');
+
+      if (isDarkMode) {
+        body.classList.remove('dark-mode');
+        themeButton.textContent = '切换为深色模式';
+      } else {
+        body.classList.add('dark-mode');
+        themeButton.textContent = '切换为浅色模式';
+      }
+      isDarkMode = !isDarkMode;
+    }
+
+    // 自动生成目录的函数
+    function generateTOC() {
+      const headings = document.querySelectorAll('.content h2, .content h3');
+      const tocContainer = document.querySelector('.sidebar ul');
+      
+      if (headings.length > 0 && tocContainer) {
+        tocContainer.innerHTML = '';
+        
+        headings.forEach((heading, index) => {
+          const id = heading.id || `section-${index}`;
+          heading.id = id;
+          
+          const listItem = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = `#${id}`;
+          link.textContent = heading.textContent;
+          
+          listItem.appendChild(link);
+          tocContainer.appendChild(listItem);
+        });
+      }
+    }
+
+    // 页面加载完成后生成目录
+    window.addEventListener('DOMContentLoaded', generateTOC);
+  </script>
+</body>
+</html>
