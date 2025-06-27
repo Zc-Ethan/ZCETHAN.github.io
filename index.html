@@ -1,384 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>我的个人网站</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
-  <style>
-  /* 基础样式 */
-    body {
-      font-family: "Helvetica Neue", "Segoe UI", sans-serif;
-      max-width: 1200px;
-      margin: auto;
-      padding: 1rem;
-      background-color: #f5f5f5;
-      color: #333;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    /* 新增：卡片容器样式，与文章正文宽度一致 */
-    .card-section {
-      margin-right: 50px;
-      margin-left: 50px;
-    }
-
-    .card {
-      display: flex;
-      background-color: #fff;
-      border-radius: 12px;
-      padding: 1rem;
-      margin-top: 2rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      cursor: pointer;
-      width: 100%; /* 卡片宽度填充容器 */
-      box-sizing: border-box; /* 确保内边距不影响总宽度 */
-    }
-/* 新增：左侧个人信息栏样式 */
-    .left-sidebar {
-      position: fixed;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 180px;
-      background-color: #fff;
-      border-radius: 8px;
-      padding: 1.5rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      z-index: 999;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #0066cc;
-      margin-bottom: 1rem;
-    }
-
-    .user-name {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 0.5rem;
-    }
-
-    .user-title {
-      font-size: 0.85rem;
-      color: #666;
-      margin-bottom: 1rem;
-    }
-
-    .user-info {
-      width: 100%;
-      font-size: 0.85rem;
-      color: #555;
-      text-align: left;
-      margin-top: 1rem;
-    }
-
-    .user-info p {
-      margin: 0.5rem 0;
-      display: flex;
-      align-items: center;
-    }
-
-    .user-info i {
-      width: 20px;
-      text-align: center;
-      margin-right: 8px;
-      color: #0066cc;
-    }
-
-    .signature {
-      font-style: italic;
-      margin: 1rem 0;
-      padding: 0.5rem;
-      border-top: 1px dashed #eee;
-      border-bottom: 1px dashed #eee;
-      color: #666;
-    }
-
-    /* 右侧目录栏样式 */
-    .sidebar {
-      position: fixed;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 200px;
-      background-color: #fff;
-      border-radius: 8px;
-      padding: 1rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      z-index: 999;
-    }
-    
-    .sidebar h3 {
-      margin-top: 0;
-      font-size: 1.2rem;
-      color: #0066cc;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 0.5rem;
-    }
-    
-    .sidebar ul {
-      list-style: none;
-      padding-left: 0;
-      margin: 0.5rem 0;
-    }
-    
-    .sidebar li {
-      margin-bottom: 0.5rem;
-    }
-    
-    .sidebar a {
-      text-decoration: none;
-      color: #555;
-      font-size: 0.9rem;
-      transition: color 0.2s ease;
-    }
-    
-    .sidebar a:hover {
-      color: #0066cc;
-    }
-
-    /* 深色模式下的侧边栏样式 */
-    body.dark-mode .left-sidebar,
-    body.dark-mode .sidebar {
-      background-color: #333;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    }
-    
-    body.dark-mode .left-sidebar .user-name {
-      color: #f5f5f5;
-    }
-    
-    body.dark-mode .left-sidebar .user-title,
-    body.dark-mode .left-sidebar .user-info,
-    body.dark-mode .left-sidebar .signature {
-      color: #bbb;
-    }
-    
-    body.dark-mode .left-sidebar .avatar {
-      border-color: #4d94ff;
-    }
-    
-    body.dark-mode .left-sidebar .user-info i {
-      color: #4d94ff;
-    }
-    
-    body.dark-mode .left-sidebar .signature {
-      border-color: #444;
-    }
-    
-    body.dark-mode .sidebar h3 {
-      color: #4d94ff;
-      border-bottom-color: #444;
-    }
-    
-    body.dark-mode .sidebar a {
-      color: #ddd;
-    }
-    
-    body.dark-mode .sidebar a:hover {
-      color: #4d94ff;
-    }
-
-    /* 内容区域 - 保持您设置的边距不变 */
-    .content {
-      margin-right: 50px;
-      margin-left: 50px;
-    }
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #f0f4f8;
-  padding: 1rem 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-nav a {
-  margin: 0 0.8rem;
-  text-decoration: none;
-  font-weight: 600;
-  color: #0066cc;
-  transition: color 0.2s ease-in-out;
-}
-
-nav a:hover {
-  color: #003366;
-}
-
-nav button {
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: #0066cc;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-header {
-  margin-top: 2rem;
-  text-align: center;
-  width: 100%;
-}
-
-.card {
-  display: flex;
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 1rem;
-  margin-top: 2rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.card:hover {
-  transform: translateY(-8px); /* 卡片浮动效果 */
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.card img {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-right: 1rem;
-}
-
-.card-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-grow: 1;
-}
-
-.card h3 {
-  margin-top: 0;
-  font-size: 1.25rem;
-}
-
-.card .date {
-  color: #888;
-  font-size: 0.9rem;
-}
-
-.card p {
-  margin-top: 0.5rem;
-  color: #555;
-}
-
-footer {
-  margin-top: 4rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #666;
-}
-/* 主题切换按钮样式 */
-#theme-toggle {
-  position: fixed;
-  bottom: 30px;
-  right: 150px;
-  background-color: #0066cc;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  transition: background-color 0.3s ease;
-}
-
-/* 深色模式 */
-body.dark-mode {
-  background-color: #2f2f2f;
-  color: #f5f5f5;
-}
-
-body.dark-mode nav {
-  background-color: #3c3c3c;
-}
-
-body.dark-mode .card {
-  background-color: #333;
-  color: #f5f5f5;
-}
-
-body.dark-mode footer {
-  color: #ccc;
-}
-
-body.dark-mode #theme-toggle {
-  background-color: #444;
-}/* 深色模式下切换视图按钮反色 */
-
-body.dark-mode #toggle-view {
-  background-color: #444; /* 背景颜色变为深灰色 */
-  color: #f5f5f5; /* 文字颜色改为白色 */
-}
-
-body.dark-mode #toggle-view:hover {
-  background-color: #555; /* 鼠标悬浮时背景变为稍微更深的灰色 */
-}
-
-
-/* 深色模式下的文本颜色反转 */
-body.dark-mode nav a {
-  color: #4d94ff;
-}
-
-body.dark-mode nav a:hover {
-  color: #99ccff;
-}
-
-body.dark-mode nav button {
-  background-color: #3399ff;
-}
-
-body.dark-mode .card h3 {
-  color: #f5f5f5;
-}
-
-body.dark-mode .card .date {
-  color: #bbb;
-}
-
-body.dark-mode .card p {
-  color: #ddd;
-}
-
-body.dark-mode footer {
-  color: #bbb;
-}
-
-/* 隐藏的内容 */
-.hidden {
-  display: none;
-}
-/* 深色模式下的特定文字反色 */
-body.dark-mode header h1 {
-  color: #f5f5f5; /* 将“欢迎来到我的个人网站”文字改为浅色 */
-}
-
-body.dark-mode nav strong {
-  color: #f5f5f5; /* 将“个人站点”文字改为浅色 */
-}
-
-  </style>
+  <title>ZCETHAN's Home</title>
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css"> -->
   <!-- 引入Font Awesome图标库 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
   <nav>
@@ -386,7 +15,6 @@ body.dark-mode nav strong {
     <div>
       <a href="./index.html">首页</a>
       <a href="./about.html">关于</a>
-      <button id="toggle-view" onclick="toggleView()">切换为资源</button>
     </div>
   </nav>
   <!-- 新增：左侧个人信息栏 -->
@@ -396,61 +24,69 @@ body.dark-mode nav strong {
     <div class="user-title">学生</div>
     
     <div class="signature">
-      探索世界的奥秘，记录学习的点滴
+      少年的悲哀，毕竟是易消的残雪。
     </div>
     
     <div class="user-info">
-      <p><i class="fas fa-envelope"></i> zcethan@example.com</p>
-      <p><i class="fas fa-phone"></i> 138-XXXX-XXXX</p>
-      <p><i class="fab fa-qq"></i> 123456789</p>
+      <p><i class="fas fa-envelope"></i> 2628868875@qq.com</p>
+      <p><i class="fab fa-qq"></i> 2628868875</p>
       <p><i class="fas fa-map-marker-alt"></i> 浙江杭州</p>
       <p><i class="fas fa-graduation-cap"></i> 浙江大学</p>
     </div>
   </div>
 
   <header>
-    <h1>欢迎来到我的个人网站</h1>
-    <p>记录学习，分享资源，积累经验</p>
+    <h1>欢迎来到ZCETHAN的个人网站</h1>
+    <p>这些是他在zju的遗产</p>
   </header>
 
   <!-- 主体内容：博客部分 -->
-  <section class="card-section" id="blog-section">
-    <div class="card" onclick="window.location.href='/blog/2025-06-22-my-first-post.html'">
-      <img src="https://via.placeholder.com/120" alt="我的第一篇博客">
-      <div class="card-content">
-        <h3>我的第一篇博客文章</h3>
-        <p class="date">2025/06/22</p>
-        <p>这是我写的第一篇博客，记录了一些学习心得和经验。</p>
+  <section class="card-section">
+    <div class="card">
+      <div class="card-image">
+        <img src="./blog/普化实验/普化实验.png" alt="普化实验">
       </div>
-    </div>
-
-    <div class="card" onclick="window.location.href='/blog/2025-06-15-algorithm-note.html'">
-      <img src="https://via.placeholder.com/120" alt="算法学习笔记">
-      <div class="card-content">
-        <h3>算法学习笔记</h3>
-        <p class="date">2025/06/15</p>
-        <p>这是关于算法学习的一些笔记，涵盖了常用的算法与数据结构。</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 资源部分 -->
-  <section class="card-section hidden" id="resources-section">
-    <div class="card" onclick="window.location.href='/blog/2025-06-22-my-first-post.html'">
-      <img src="https://via.placeholder.com/120" alt="我的第一篇博客">
       <div class="card-content">
         <h3>普化实验</h3>
         <p class="date">2025/06/22</p>
-        <p>这是我写的第一篇博客，记录了一些学习心得和经验。</p>
+        <p>收录了笔者写的普化实验报告，并记录了对应实验的关键点和注意点。</p>
+        <a class="card-link" onclick="window.location.href='./blog/普化实验/普化实验.html'">查看详情</a>
       </div>
     </div>
 
-    <div class="card" onclick="window.location.href='./blog/GeneralPhysicsExperiment.html'">
-      <img src="https://via.placeholder.com/120" alt="普物Ⅰ实验">
+    <div class="card">
+      <div class="card-image">
+        <img src="./blog/普物实验1/普物实验1.png" alt="普通物理实验Ⅰ">
+      </div>
       <div class="card-content">
-        <h3>普物Ⅰ实验</h3>
+        <h3>普通物理实验Ⅰ</h3>
         <p class="date">2025/06/22</p>
         <p>记录了笔者所选的物理实验及其上课体验，并提供了笔者的实验报告。</p>
+        <a class="card-link" onclick="window.location.href='./blog/普物实验1/普物实验1.html'">查看详情</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">
+        <img src="./blog/普物实验1/普物实验1.png" alt="普通物理实验Ⅰ">
+      </div>
+      <div class="card-content">
+        <h3>普通物理实验Ⅰ</h3>
+        <p class="date">2025/06/22</p>
+        <p>记录了笔者所选的物理实验及其上课体验，并提供了笔者的实验报告。</p>
+        <a class="card-link" onclick="window.location.href='./blog/普物实验1/普物实验1.html'">查看详情</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">
+        <img src="./blog/普物实验1/普物实验1.png" alt="普通物理实验Ⅰ">
+      </div>
+      <div class="card-content">
+        <h3>普通物理实验Ⅰ</h3>
+        <p class="date">2025/06/22</p>
+        <p>记录了笔者所选的物理实验及其上课体验，并提供了笔者的实验报告。</p>
+        <a class="card-link" onclick="window.location.href='./blog/普物实验1/普物实验1.html'">查看详情</a>
       </div>
     </div>
   </section>
@@ -461,41 +97,7 @@ body.dark-mode nav strong {
 
   <button id="theme-toggle" onclick="toggleTheme()">切换为深色模式</button>
 
-  <script>
-    let isDarkMode = false;
-
-    function toggleTheme() {
-      const body = document.body;
-      const themeButton = document.getElementById('theme-toggle');
-
-      if (isDarkMode) {
-        body.classList.remove('dark-mode');
-        themeButton.textContent = '切换为深色模式';
-      } else {
-        body.classList.add('dark-mode');
-        themeButton.textContent = '切换为浅色模式';
-      }
-      isDarkMode = !isDarkMode;
-    }
-
-    let isBlogView = true; // 默认显示博客视图
-
-    function toggleView() {
-      const blogSection = document.getElementById('blog-section');
-      const resourcesSection = document.getElementById('resources-section');
-      const toggleButton = document.getElementById('toggle-view');
-      
-      if (isBlogView) {
-        blogSection.classList.add('hidden');
-        resourcesSection.classList.remove('hidden');
-        toggleButton.textContent = '切换为博客';
-      } else {
-        blogSection.classList.remove('hidden');
-        resourcesSection.classList.add('hidden');
-        toggleButton.textContent = '切换为资源';
-      }
-      isBlogView = !isBlogView; // 切换视图状态
-    }
-  </script>
+  <script src="./js/page-transition.js" defer></script>
+  <script src="./js/main.js" defer></script>
 </body>
 </html>
