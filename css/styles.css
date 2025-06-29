@@ -159,7 +159,6 @@ footer {
 /* ===== 侧边栏 ===== */
 .left-sidebar, .right-sidebar {
   position: fixed;
-  width: 180px;
   background-color: #fff;
   border-radius: 8px;
   padding: 1.5rem;
@@ -173,13 +172,18 @@ footer {
 .left-sidebar {
   left: 30px;
   top: 300px;
+  width: 180px;
   margin: 0;
 }
 
 .right-sidebar {
   right: 30px;
   top: 20%;
+  width: 220px;
   margin: 0;
+  max-height: 60vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .avatar {
@@ -240,7 +244,14 @@ footer {
 }
 
 /* 目录样式 */
-.toc-container { padding: 0.5rem; }
+.toc-container {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* 填充整个侧边栏高度 */ 
+  overflow: hidden;
+}
+
 .toc-title {
   font-size: 1.1rem;
   color: #2c3e50;
@@ -249,10 +260,47 @@ footer {
   border-bottom: 1px solid #eee;
 }
 
+.toc-scroll-wrapper {
+  flex: 1; /* 占据剩余空间 */
+  overflow-y: auto; /* 启用垂直滚动 */
+  padding: 0 1rem 1rem;
+  min-height: 0; /* 必须 */
+}
+.toc-scroll-wrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.toc-scroll-wrapper::-webkit-scrollbar-track {
+  background: rgba(241, 241, 241, 0.5);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.toc-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+.toc-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.toc-scroll-wrapper::-webkit-scrollbar-corner {
+  background: transparent;
+}
+.toc-scroll-wrapper {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* iOS平滑滚动 */
+}
+
 .toc-list {
   list-style: none;
   padding-left: 0;
   margin: 0;
+  min-height: min-content; /* 重要：确保可以收缩 */
 }
 
 .toc-item { margin-bottom: 0.4rem; line-height: 1.4; }
@@ -285,7 +333,11 @@ footer {
 
 .toc-h3 { padding-left: 1rem; }
 .toc-h4 { padding-left: 2rem; }
-
+@media (max-width: 1200px) {
+  .right-sidebar {
+    display: none;
+  }
+}
 /* ===== 主题切换按钮 ===== */
 #theme-toggle {
   position: fixed;
@@ -426,7 +478,21 @@ body.dark-mode .toc-link.active { color: #4d94ff; }
 
 body.dark-mode .toc-link.active::before { background: #4d94ff; }
 body.dark-mode .page-overlay { background: #222; }
+body.dark-mode .toc-scroll-wrapper {
+  scrollbar-color: #555 #333; /* Firefox */
+}
 
+body.dark-mode .toc-scroll-wrapper::-webkit-scrollbar-track {
+  background: rgba(51, 51, 51, 0.5);
+}
+
+body.dark-mode .toc-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+body.dark-mode .toc-scroll-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
 /* ===== 响应式设计 ===== */
 @media (max-width: 1200px) {
   .left-sidebar, .right-sidebar { display: none; }

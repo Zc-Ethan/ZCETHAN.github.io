@@ -11,14 +11,14 @@ document.addEventListener('DOMContentLoaded', function() {
   let tocContainer = rightSidebar.querySelector('.toc-container');
   if (!tocContainer) {
     tocContainer = document.createElement('div');
-  tocContainer.className = 'toc-container';
-  tocContainer.innerHTML = `
-    <h3 class="toc-title">目录</h3>
-    <div class="toc-scroll-wrapper">
-      <ul class="toc-list"></ul>
-    </div>
-  `;
-  rightSidebar.insertBefore(tocContainer, rightSidebar.firstChild);
+    tocContainer.className = 'toc-container';
+    tocContainer.innerHTML = `
+      <h3 class="toc-title">目录</h3>
+      <div class="toc-scroll-wrapper">
+        <ul class="toc-list"></ul>
+      </div>
+    `;
+    rightSidebar.appendChild(tocContainer);
     
     // 添加动态高度调整（可选）
     const updateTocHeight = () => {
@@ -76,25 +76,25 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // 滚动高亮当前章节（优化版）
-  let lastActive = null; // 缓存上次高亮的标题
+  // 滚动高亮当前章节（优化版）
+  let lastActive = null;
 
-  window.addEventListener('scroll', function() {
-    const scrollThreshold = 100; // 视口顶部区域阈值
-    const scrollPosition = window.scrollY;
+  const highlightSection = () => {
     let activeHeading = null;
-
-    // 查找第一个进入视口顶部区域的标题
+    const scrollThreshold = 100; // 视口顶部偏移量
+    
+    // 1. 找到当前激活的标题
     for (const heading of headings) {
       const section = document.getElementById(heading.id);
       const rect = section.getBoundingClientRect();
       
       if (rect.top <= scrollThreshold && rect.bottom > 0) {
         activeHeading = heading;
-        break; // 找到第一个符合条件的就停止
+        break;
       }
     }
 
-    // 避免频繁DOM操作
+    // 2. 如果找到激活标题且不同于上次
     if (activeHeading && activeHeading !== lastActive) {
       // 移除所有高亮
       tocList.querySelectorAll('.toc-link').forEach(link => {
@@ -106,15 +106,37 @@ document.addEventListener('DOMContentLoaded', function() {
       if (activeLink) {
         activeLink.classList.add('active');
         lastActive = activeHeading;
+        
+        // 3. 自动滚动到激活项（核心代码）
+        const scrollWrapper = document.querySelector('.toc-scroll-wrapper');
+        const wrapperRect = scrollWrapper.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+        
+        // 计算需要滚动的距离
+        const scrollPosition = linkRect.top - wrapperRect.top + scrollWrapper.scrollTop;
+        const middlePosition = scrollPosition - (wrapperRect.height / 2) + (linkRect.height / 2);
+        
+        // 平滑滚动
+        scrollWrapper.scrollTo({
+          top: middlePosition,
+          behavior: 'smooth'
+        });
       }
     }
-  });function debounce(func, wait) {
+  };
+
+  // 使用防抖优化性能
+  const debounce = (func, wait) => {
     let timeout;
-    return function() {
+    return () => {
       clearTimeout(timeout);
       timeout = setTimeout(func, wait);
     };
-  }
+  };
 
-  window.addEventListener('scroll', debounce(highlightSection, 50));
+  // 初始化执行一次
+  highlightSection();
+  
+  // 监听滚动事件
+  window.addEventListener('scroll', debounce(highlightSection, 20));
 });
