@@ -13,9 +13,13 @@ document.addEventListener('DOMContentLoaded', function() {
   if(main) main.classList.add('page-enter');
 });
 
-function isValidLink(link) {
-  // 实现您的链接验证逻辑
-  return link && link.href && !link.hasAttribute('target') && link.href.startsWith(window.location.origin);
+function isValidLink(link) {  // 排除目录导航链接
+  if (link && link.dataset.tocNavigation === 'true') return false;
+  if (link && (link.hasAttribute('download') || link.href.match(/\.(zip|rar|7z|tar|gz|exe|pdf|docx?|xlsx?|pptx?|mp3|mp4|avi|mov|wmv|flv|mkv|apk|dmg|iso)(\?|#|$)/i))) return false;
+  return link && 
+         link.href && 
+         !link.hasAttribute('target') && 
+         link.href.startsWith(window.location.origin);
 }
 
 function transitionToPage(url) {

@@ -11,9 +11,24 @@ document.addEventListener('DOMContentLoaded', function() {
   let tocContainer = rightSidebar.querySelector('.toc-container');
   if (!tocContainer) {
     tocContainer = document.createElement('div');
-    tocContainer.className = 'toc-container';
-    tocContainer.innerHTML = '<h3 class="toc-title">文章目录</h3><ul class="toc-list"></ul>';
-    rightSidebar.insertBefore(tocContainer, rightSidebar.firstChild);
+  tocContainer.className = 'toc-container';
+  tocContainer.innerHTML = `
+    <h3 class="toc-title">目录</h3>
+    <div class="toc-scroll-wrapper">
+      <ul class="toc-list"></ul>
+    </div>
+  `;
+  rightSidebar.insertBefore(tocContainer, rightSidebar.firstChild);
+    
+    // 添加动态高度调整（可选）
+    const updateTocHeight = () => {
+      const viewportHeight = window.innerHeight;
+      const headerHeight = document.querySelector('header').offsetHeight;
+      tocContainer.style.maxHeight = `calc(${viewportHeight}px - ${headerHeight}px - 40px)`;
+    };
+    
+    window.addEventListener('resize', updateTocHeight);
+    updateTocHeight();
   }
 
   const tocList = tocContainer.querySelector('.toc-list');
@@ -50,28 +65,56 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.target.classList.contains('toc-link')) {
       e.preventDefault();
       const target = document.querySelector(e.target.getAttribute('href'));
+      e.stopImmediatePropagation();
+      e.target.dataset.tocNavigation = 'true';
       target.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
+      history.pushState(null, null, e.target.getAttribute('href'));
     }
   });
 
-  // 滚动高亮当前章节
+  // 滚动高亮当前章节（优化版）
+  let lastActive = null; // 缓存上次高亮的标题
+
   window.addEventListener('scroll', function() {
-    const fromTop = window.scrollY + 100;
-    
-    headings.forEach(heading => {
-      const section = document.querySelector(`#${heading.id}`);
-      if (
-        section.offsetTop <= fromTop &&
-        section.offsetTop + section.offsetHeight > fromTop
-      ) {
-        tocList.querySelectorAll('.toc-link').forEach(link => {
-          link.classList.remove('active');
-        });
-        tocList.querySelector(`a[href="#${heading.id}"]`).classList.add('active');
+    const scrollThreshold = 100; // 视口顶部区域阈值
+    const scrollPosition = window.scrollY;
+    let activeHeading = null;
+
+    // 查找第一个进入视口顶部区域的标题
+    for (const heading of headings) {
+      const section = document.getElementById(heading.id);
+      const rect = section.getBoundingClientRect();
+      
+      if (rect.top <= scrollThreshold && rect.bottom > 0) {
+        activeHeading = heading;
+        break; // 找到第一个符合条件的就停止
       }
-    });
-  });
+    }
+
+    // 避免频繁DOM操作
+    if (activeHeading && activeHeading !== lastActive) {
+      // 移除所有高亮
+      tocList.querySelectorAll('.toc-link').forEach(link => {
+        link.classList.remove('active');
+      });
+      
+      // 添加新高亮
+      const activeLink = tocList.querySelector(`a[href="#${activeHeading.id}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+        lastActive = activeHeading;
+      }
+    }
+  });function debounce(func, wait) {
+    let timeout;
+    return function() {
+      clearTimeout(timeout);
+      timeout = setTimeout(func, wait);
+    };
+  }
+
+  window.addEventListener('scroll', debounce(highlightSection, 50));
 });
